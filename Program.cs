@@ -34,6 +34,14 @@ public class Program {
     var visitor = new Visitor();
     var after = visitor.Visit(function);
     Console.WriteLine($"From {function} to {after}");
+    Console.WriteLine(Visit(visitor, x => x + 1));
+  }
+
+  static Expression Visit(
+    Visitor visitor,
+    Expression<Func<double, double>> expression
+  ) {
+    return visitor.Visit(expression);
   }
 
 }
