@@ -38,9 +38,9 @@ public class Program {
 
 }
 
-class MyParameter: Expression {
+class Variable: Expression {
 
-  public MyParameter(Type type, string name) {
+  public Variable(Type type, string name) {
     this.type = type;
     this.Name = name;
   }
@@ -65,9 +65,9 @@ class MyParameter: Expression {
 
 }
 
-class MyLambda: Expression {
+class Function: Expression {
 
-  public MyLambda(
+  public Function(
     Type type,
     Expression body,
     ReadOnlyCollection<Expression> parameters
@@ -110,7 +110,7 @@ class Visitor: ExpressionVisitor {
   }
 
   protected override Expression VisitLambda<T>(Expression<T> node) {
-    return new MyLambda(
+    return new Function(
       // The same type should apply if we just replace old parameters with our
       // metadata-carrying equivalents.
       node.Type,
@@ -123,7 +123,7 @@ class Visitor: ExpressionVisitor {
 
   protected override Expression VisitParameter(ParameterExpression node) {
     Console.WriteLine($"Found parameter: {node.Type} {node.NodeType} {node.Name}");
-    return new MyParameter(node.Type, node.Name);
+    return new Variable(node.Type, node.Name);
   }
 }
 
