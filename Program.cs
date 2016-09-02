@@ -38,33 +38,6 @@ public class Program {
 
 }
 
-class Variable: Expression {
-
-  public Variable(Type type, string name) {
-    this.type = type;
-    this.Name = name;
-  }
-
-  public sealed override ExpressionType NodeType {
-    get {return ExpressionType.Parameter;}
-  }
-
-  public readonly string Name;
-
-  public override string ToString() {
-    // TODO Change this back to just the name.
-    // TODO It's only extra so I can see that I've got it in place.
-    return $"{Name}!?!";
-  }
-
-  public sealed override Type Type {
-    get {return type;}
-  }
-
-  private Type type;
-
-}
-
 class Function: Expression {
 
   public Function(
@@ -100,6 +73,33 @@ class Function: Expression {
   }
 
   private readonly Type type;
+
+}
+
+class Variable: Expression {
+
+  public Variable(Type type, string name) {
+    this.type = type;
+    this.Name = name;
+  }
+
+  public sealed override ExpressionType NodeType {
+    get {return ExpressionType.Parameter;}
+  }
+
+  public readonly string Name;
+
+  public override string ToString() {
+    // TODO Change this back to just the name.
+    // TODO It's only extra so I can see that I've got it in place.
+    return $"{Name}!?!";
+  }
+
+  public sealed override Type Type {
+    get {return type;}
+  }
+
+  private Type type;
 
 }
 
