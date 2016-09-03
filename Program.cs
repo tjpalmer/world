@@ -22,8 +22,8 @@ public class Program {
     Console.WriteLine(
       $"In call: {call.Method} {string.Join(" ", call.Arguments)}"
     );
-    Console.WriteLine($"Is min? {call.Method == GetInfo(Min)}");
-    Console.WriteLine($"Is pow? {call.Method == GetInfo(Pow)}");
+    Console.WriteLine($"Is min? {call.Method == Method(Min)}");
+    Console.WriteLine($"Is pow? {call.Method == Method(Pow)}");
     var argsList = new List<Expression>(call.Arguments).ToArray();
     var arguments = call.Arguments;
     foreach (var argument in arguments) {
@@ -41,7 +41,7 @@ public class Program {
     return expression;
   }
 
-  static MethodInfo GetInfo(Func<double, double, double> function) {
+  static MethodInfo Method(Func<double, double, double> function) {
     return function.GetMethodInfo();
   }
 
