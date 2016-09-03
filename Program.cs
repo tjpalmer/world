@@ -4,13 +4,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Collections.ObjectModel;
+using static System.Math;
 
 namespace World {
 
 public class Program {
 
   public static void Main(string[] args) {
-    Expression<Func<double, double>> function = x => Math.Pow(x, 2);
+    var function = Expr(x => Pow(x, 2));
     Console.WriteLine(string.Join(" ",
       "Hello World!",
       $"{function}",
@@ -21,11 +22,8 @@ public class Program {
     Console.WriteLine(
       $"In call: {call.Method} {string.Join(" ", call.Arguments)}"
     );
-    var method = call.Method;
-    var pow = ((Func<double, double, double>)Math.Pow).GetMethodInfo();
-    var min = ((Func<double, double, double>)Math.Min).GetMethodInfo();
-    Console.WriteLine($"Is min? {method == min}");
-    Console.WriteLine($"Is pow? {method == pow}");
+    Console.WriteLine($"Is min? {call.Method == GetInfo(Min)}");
+    Console.WriteLine($"Is pow? {call.Method == GetInfo(Pow)}");
     var argsList = new List<Expression>(call.Arguments).ToArray();
     var arguments = call.Arguments;
     foreach (var argument in arguments) {
@@ -34,14 +32,17 @@ public class Program {
     var visitor = new Visitor();
     var after = visitor.Visit(function);
     Console.WriteLine($"From {function} to {after}");
-    Console.WriteLine(Visit(visitor, x => x + 1));
+    Console.WriteLine(visitor.Visit(Expr(x => x + 1)));
   }
 
-  static Expression Visit(
-    Visitor visitor,
+  static Expression<Func<double, double>> Expr(
     Expression<Func<double, double>> expression
   ) {
-    return visitor.Visit(expression);
+    return expression;
+  }
+
+  static MethodInfo GetInfo(Func<double, double, double> function) {
+    return function.GetMethodInfo();
   }
 
 }
